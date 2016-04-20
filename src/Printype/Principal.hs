@@ -13,7 +13,9 @@ module Printype.Principal(
   Premise(..),
   principal_type_deduction,
   principal_type_deduction_log,
-  TypingFailure) where
+  TypingFailure,
+  module Printype.Lambda,
+  module Printype.Types) where
 
 import Control.Monad.State.Lazy
 import Control.Monad.Writer.Lazy

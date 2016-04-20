@@ -1,9 +1,7 @@
 module Main(main) where
 
-import Printype.Lambda
 import Printype.Lambda.Combinators
 import Printype.Principal
-import Printype.Types
 import qualified Printype.Latex as L
 
 pretty_principal_type_deduction :: Term -> IO ()

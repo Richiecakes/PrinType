@@ -3,8 +3,6 @@
 module Printype.Latex(render_term_deduction, render_term_deductions) where
 
 import Printype.Principal
-import Printype.Lambda
-import Printype.Types
 
 import Text.LaTeX.Packages.Prftree
 
