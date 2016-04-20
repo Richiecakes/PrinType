@@ -15,11 +15,12 @@ module Lambda(
 data Term = Var Char | Lam Char Term | App Term Term
 
 instance Show Term where
+  show (App t1 (App t2 t3)) = show t1 ++ "(" ++ show t2 ++ show t3 ++ ")"
   show (App (App t1 t2) t3) = show t1 ++ show t2 ++ show t3
   show (Var x) = [x]
   show (Lam x (Lam y t)) = "\\" ++ [x,y] ++ "." ++ show t
   show (Lam x t) = "\\" ++ [x] ++ "." ++ show t
-  show (App t1 t2) = "(" ++ show t1 ++ show t2 ++ ")"
+  show (App t1 t2) = show t1 ++ show t2
 
 var :: Char -> Term
 var = Var
