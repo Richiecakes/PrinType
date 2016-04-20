@@ -1,5 +1,8 @@
 # PrinType (WIP)
-Generates formal proofs for principal type deductions of terms in the simply typed lambda calculus.
+
+**Generates formal proofs for principal type deductions of terms in the simply typed lambda calculus.**
+
+![deduction proof](https://raw.githubusercontent.com/Richiecakes/PrinType/master/image.png "Sample deduction proof")
 
 > The study of the λ-calculus is of the set of terms and equations between the terms.
 
