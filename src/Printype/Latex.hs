@@ -1,11 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Latex(render_term_deduction, render_term_deductions) where
+module Printype.Latex(render_term_deduction, render_term_deductions) where
 
-import Principal
-import Lambda
-import Types
-import Prftree
+import Printype.Principal
+import Printype.Lambda
+import Printype.Types
+
+import Text.LaTeX.Packages.Prftree
 
 import Data.List (intersperse)
 import Data.Version (showVersion)

@@ -4,17 +4,12 @@
 -- Type substitutions.
 -------------------------------------------------------------
 
-module Types(
-	Type(..),
+module Printype.Types.Syntax(
+	Type(..), foldType,
 	arrowR, arrowL, arrowR', arrowL',
 	contains_tv, is_arrow_type,
 	argtype, restype,
-	fresh_tv, fresh_tv',
-	Substitution, Substitutible(applysub, tvars),
-	empty_sub, unsubstitute, compose, singleton) where
-
-import qualified Data.Map.Strict as Map
-import qualified Data.Set as Set
+	fresh_tv, fresh_tv') where
 
 -- TYPES --
 
@@ -73,42 +68,3 @@ fresh_tv = (+1) . foldType id max
 -- Finds a type variable which is not present in the given types.
 fresh_tv' :: [Type] -> Int
 fresh_tv' = ((+1) . foldl1 max . map fresh_tv)
-      
-
--- SUBSTITUTIONS --
-
--- Datatype for substitutions of the form [C_1/c_1, ..., C_n/c_n]
--- for type variables c_i and C_i ranging over types.
-
-newtype Substitution = Sub (Map.Map Int Type) deriving Show
-
--- Datatypes which can have type substitutions applied to.
-
-class Substitutible a where
-  applysub :: Substitution -> a -> a
-  tvars :: a -> Set.Set Int
-
-instance Substitutible Type where
-  applysub (Sub s) = foldType fv fa
-    where fv = (\ x -> Map.findWithDefault (TVar x) x s)
-          fa = (:=>)
-  tvars = foldType (Set.singleton) (Set.union)
-
--- The empty substitution [].
-empty_sub :: Substitution
-empty_sub = Sub $ Map.empty
-
--- Remove the term [X/x] from the given substitution, if one exists.
-unsubstitute :: Substitution -> Int -> Substitution
-unsubstitute (Sub s) x = Sub $ Map.delete x s
-
--- Sequential composition of two type substitutions.
--- (s.t)(A) = s(t(A))
-compose :: Substitution -> Substitution -> Substitution
-compose (Sub s) (Sub t) =
-  let st = Map.map (\ tv -> applysub (Sub s) tv) t
-  in Sub $ Map.unionWith seq s st
-
--- The singleton substitution [t/x].
-singleton :: Int -> Type -> Substitution
-singleton x t = Sub $ Map.singleton x t 

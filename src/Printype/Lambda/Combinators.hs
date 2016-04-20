@@ -3,12 +3,12 @@
 -- Common terms and combinators for lambda calculus.
 -------------------------------------------------------------
 
-module Combinators(sCombinator, kCombinator, identity,
+module Printype.Lambda.Combinators(sCombinator, kCombinator, identity,
 	numeral, true, false, andCombinator, orCombinator,
 	twicetwice, twicetwicetwice,
 	selfapply, abcd) where
 
-import Lambda
+import Printype.Lambda
 
 identity :: Term
 identity = lam 'x' (var 'x')

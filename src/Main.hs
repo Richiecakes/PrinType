@@ -1,10 +1,10 @@
 module Main(main) where
 
-import Lambda
-import Combinators
-import Principal
-import Types
-import qualified Latex as L
+import Printype.Lambda
+import Printype.Lambda.Combinators
+import Printype.Principal
+import Printype.Types
+import qualified Printype.Latex as L
 
 pretty_principal_type_deduction :: Term -> IO ()
 pretty_principal_type_deduction t = 
@@ -50,15 +50,15 @@ pretty_deduction d =
 --                 true,
 --                 andCombinator]
 
---main :: IO ()
---main = pretty_principal_type_deduction sCombinator
-
 main :: IO ()
-main = L.render_term_deductions [ identity,
-					              sCombinator,
-					              numeral 2,
-					              selfapply,
-					              numeral 0,
-					              appL' "xxx",
-					              true,
-					              andCombinator ]
+main = pretty_principal_type_deduction sCombinator
+
+--main :: IO ()
+--main = L.render_term_deductions [ identity,
+--					              sCombinator,
+--					              numeral 2,
+--					              selfapply,
+--					              numeral 0,
+--					              appL' "xxx",
+--					              true,
+--					              andCombinator ]

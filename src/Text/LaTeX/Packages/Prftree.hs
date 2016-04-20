@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Prftree(rightarrow, prftree,
+module Text.LaTeX.Packages.Prftree(rightarrow, prftree,
   axiom, unary, binary,
   namedAxiom, namedUnary, namedBinary) where
 

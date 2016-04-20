@@ -4,9 +4,10 @@
 -- for simple types.
 -------------------------------------------------------------
 
-module Unify(mgu, mgu_sequence) where
+module Printype.Types.Unify(mgu, mgu_sequence) where
 
-import Types
+import Printype.Types.Syntax
+import Printype.Types.Substitutions
 
 -- Two mismatching types found in two larger types.
 -- DTI: The left type is atomic.

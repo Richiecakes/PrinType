@@ -4,7 +4,7 @@
 -- for terms of the untyped lambda calculus.
 -------------------------------------------------------------
 
-module Lambda(
+module Printype.Lambda(
     Term(..),
     var, lam, app,
     lams, nfoldapp,
