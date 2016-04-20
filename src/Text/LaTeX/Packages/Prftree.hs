@@ -1,5 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+{-|
+Module      : Text.LaTeX.Packages.Prftree
+Description : A helper library for using the 'prftree' package with HaTeX.
+Copyright   : Richard Appleby 2016
+
+Provides useful command bindings and package name for easily constructing prftree
+proofs with HaTeX.
+-}
+
 module Text.LaTeX.Packages.Prftree(rightarrow, prftree,
   axiom, unary, binary,
   namedAxiom, namedUnary, namedBinary) where

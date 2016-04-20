@@ -1,10 +1,10 @@
--------------------------------------------------------------
--- PRINCIPAL
--- Module implementing the principal type deduction algorithm
--- for finding most general types of lambda terms.
--- Type contexts.
--- Deductions.
--------------------------------------------------------------
+{-|
+Module      : Printype.Principal.Deductions
+Description : Implements a syntax for type deduction trees.
+Copyright   : Richard Appleby 2016
+
+A deduction tree is a formal proof tree describing how a particular type assignment is derived.
+-}
 
 module Printype.Principal.Deductions(
   Deduction(..),

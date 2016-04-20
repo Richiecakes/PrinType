@@ -1,8 +1,12 @@
--------------------------------------------------------------
--- UNIFY
--- Module implementing Robinson's type unification algorithm
--- for simple types.
--------------------------------------------------------------
+{-|
+Module      : Printype.Types.Unify
+Description : Implements Robinson's type unification algorithm.
+Copyright   : Richard Appleby 2016
+
+A unifier U of two types A, B is a substitution S such that S(A) = S(B).
+A most general unifier or mgu U of two types A and B is a unifier such that every other
+unifier factors through U.
+-}
 
 module Printype.Types.Unify(mgu, mgu_sequence) where
 

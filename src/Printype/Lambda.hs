@@ -1,8 +1,10 @@
--------------------------------------------------------------
--- LAMBDA
--- Datatype, construction functions and predicates
--- for terms of the untyped lambda calculus.
--------------------------------------------------------------
+{-|
+Module      : Printype.Lambda
+Description : Basic syntax and helper functions for terms of the lambda calculus.
+Copyright   : Richard Appleby 2016
+
+Datatype, construction functions and predicates for terms of the untyped lambda calculus.
+-}
 
 module Printype.Lambda(
     Term(..),

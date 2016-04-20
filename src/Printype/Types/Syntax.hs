@@ -1,8 +1,11 @@
--------------------------------------------------------------
--- TYPES
--- Simple types. Type constructors and predicates.
--- Type substitutions.
--------------------------------------------------------------
+{-|
+Module      : Printype.Types.Syntax
+Description : Provides a syntax for basic types.
+Copyright   : Richard Appleby 2016
+
+A basic type is either a type variable or an arrow type of the form t1 :=> t2.
+The module also provides several utility functions for constructing types.
+-}
 
 module Printype.Types.Syntax(
 	Type(..), foldType,

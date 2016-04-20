@@ -1,5 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+{-|
+Module      : Printype.Latex
+Description : A LaTeX based pretty printer for type deductions.
+Copyright   : Richard Appleby 2016
+
+A LaTeX based pretty printer for type deductions using the HaTeX library and the prftree LaTeX package.
+-}
+
 module Printype.Latex(render_term_deduction, render_term_deductions) where
 
 import Printype.Principal

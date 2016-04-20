@@ -1,8 +1,11 @@
--------------------------------------------------------------
--- UNIFY
--- Module implementing Robinson's type unification algorithm
--- for simple types.
--------------------------------------------------------------
+{-|
+Module      : Printype.Types.Substitutions
+Description : Provides an implementation of type substitutions using maps.
+Copyright   : Richard Appleby 2016
+
+A type substitution is a map from type variables to types.
+A type substitution can be applied to any member of the Substitutible typeclass.
+-}
 
 module Printype.Types.Substitutions(
   Substitution, Substitutible(applysub, tvars),

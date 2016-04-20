@@ -1,10 +1,10 @@
--------------------------------------------------------------
--- PRINCIPAL
--- Module implementing the principal type deduction algorithm
--- for finding most general types of lambda terms.
--- Type contexts.
--- Deductions.
--------------------------------------------------------------
+{-|
+Module      : Printype.Principal
+Description : Principal type deduction algorithm.
+Copyright   : Richard Appleby 2016
+
+Module implementing the principal type deduction algorithm for finding most general types of lambda terms.
+-}
 
 module Printype.Principal(
   Deduction(..),

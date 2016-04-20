@@ -1,10 +1,11 @@
--------------------------------------------------------------
--- PRINCIPAL
--- Module implementing the principal type deduction algorithm
--- for finding most general types of lambda terms.
--- Type contexts.
--- Deductions.
--------------------------------------------------------------
+{-|
+Module      : Printype.Principal.Contexts
+Description : Type contexts (environments) used in type deductions.
+Copyright   : Richard Appleby 2016
+
+A type context provides an environment for a term to be typed in.
+A type context can be implemented as a map from term variables to types.
+-}
 
 module Printype.Principal.Contexts(
   Context(..),

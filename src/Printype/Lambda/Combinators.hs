@@ -1,7 +1,11 @@
--------------------------------------------------------------
--- COMBINATORS
--- Common terms and combinators for lambda calculus.
--------------------------------------------------------------
+{-|
+Module      : Printype.Lambda.Combinators
+Description : Commonly used combinators in the lambda calculus.
+Copyright   : Richard Appleby 2016
+
+Examples of both typbable and untypbable terms in the lambda calculus.
+Includes SK combinators, boolean logic combinators and church numerals.
+-}
 
 module Printype.Lambda.Combinators(sCombinator, kCombinator, identity,
 	numeral, true, false, andCombinator, orCombinator,
