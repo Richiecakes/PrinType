@@ -12,22 +12,23 @@ module Printype.Lambda.Combinators(sCombinator, kCombinator, identity,
 	twicetwice, twicetwicetwice,
 	selfapply, abcd) where
 
-import Printype.Lambda
+import Printype.Lambda.Syntax
+import Printype.Lambda.Parser
 
 identity :: Term
-identity = lam 'x' (var 'x')
+identity = parseTerm "Lx.x"
 
 sCombinator :: Term
-sCombinator = lams "xyz" $ app (appL' "xz") (appL' "yz")
+sCombinator = parseTerm "Lxyz.xz(yz)"
 
 kCombinator :: Term
-kCombinator = lams "xy" $ var 'x'
+kCombinator = parseTerm "Lxy.x"
 
 true :: Term
 true = kCombinator
 
 false :: Term
-false = lams "xy" $ var 'y'
+false = parseTerm "Lxy.y"
 
 andCombinator :: Term
 andCombinator = lams "ab" $ appL [var 'a', var 'b', false]
@@ -36,7 +37,7 @@ orCombinator :: Term
 orCombinator = lams "ab" $ appL [var 'a', true, var 'b']
 
 abcd :: Term
-abcd = appL' "abcd"
+abcd = parseTerm "abcd"
 
 -- Given a positive integer n, returns the nth Church numeral.
 numeral :: Int -> Term
@@ -54,4 +55,4 @@ twicetwicetwice :: Term
 twicetwicetwice = app twice twicetwice
 
 selfapply :: Term
-selfapply = lam 'x' (appL' "xx")
+selfapply = parseTerm "Lx.xx"

@@ -3,6 +3,7 @@ module Main(main) where
 import Printype.Lambda.Combinators
 import Printype.Principal
 import qualified Printype.Latex as L
+import Printype.Lambda.Parser
 
 pretty_principal_type_deduction :: Term -> IO ()
 pretty_principal_type_deduction t = 
