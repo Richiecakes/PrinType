@@ -48,19 +48,49 @@ extra-source-files:  README.md
 -- Constraint on the version of Cabal needed to build this package.
 cabal-version:       >=1.10
 
+library
+  exposed-modules:
+    Printype.Lambda
+      Printype.Lambda.Combinators
+      Printype.Lambda.Parser
+      Printype.Lambda.Syntax
+    Printype.Principal
+      Printype.Principal.Contexts
+      Printype.Principal.Deductions
+    Printype.Types
+      Printype.Types.Substitutions
+      Printype.Types.Syntax
+      Printype.Types.Unify
+    Printype.Latex
+
+  -- Other modules included in this library
+  other-modules:
+    Text.LaTeX.Packages.Prftree
+
+  -- LANGUAGE extensions used by modules in this package.
+  other-extensions:    OverloadedStrings
+  
+  -- Other library packages from which modules are imported.
+  build-depends:       base >=4.7 && <4.8, HaTeX >=3.16 && <3.17, mtl >=2.2 && <2.3, containers >=0.5 && <0.6
+
+  -- Directories containing source files.
+  hs-source-dirs:      src
+
+  -- Base language which the package is written in.
+  default-language:    Haskell2010
 
 executable PrinType
   -- .hs or .lhs file containing the Main module.
   main-is:             Main.hs
   
   -- Modules included in this executable, other than Main.
-  -- other-modules:       
+  other-modules:   
   
   -- LANGUAGE extensions used by modules in this package.
   other-extensions:    OverloadedStrings
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.7 && <4.8, HaTeX >=3.16 && <3.17, mtl >=2.2 && <2.3, containers >=0.5 && <0.6
+  build-depends:       base >=4.7 && <4.8, HaTeX >=3.16 && <3.17, mtl >=2.2 && <2.3, containers >=0.5 && <0.6, PrinType
   
   -- Directories containing source files.
   hs-source-dirs:      src
