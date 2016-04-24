@@ -16,7 +16,20 @@ version:             0.1.0.0
 synopsis:            A principal typing system for the simply typed lambda calculus.
 
 -- A longer description of the package.
--- description:         
+description:         
+  PrinType is a small library for generating typing proofs in the simply typed lambda calculus. It also aims to provide a command line tool for generating and exporting such proofs in a variety of formats.
+  .
+  __Planned features include:__
+  .
+  * A parser for inputting lambda expressions from the command line.
+  For example, Lxyz.xz(yz)
+  * A library of common combinators.
+  * ASCII proof output.
+  * LaTeX proof output.
+  * Customisable proof formats and preferences.
+  For example, use numbers for type variables (1 => 2) or capital letters (A => B).
+  * Informative result for untypbable terms exaplaining why the term is not typbable.
+  * Verbose options for logging operation of typing algorithm and type unification.
 
 -- URL for the project homepage or repository.
 homepage:            https://github.com/Richiecakes/PrinType
@@ -35,7 +48,7 @@ author:              Richard Appleby
 maintainer:          richard.appleby@wadh.ox.ac.uk
 
 -- A copyright notice.
--- copyright:           
+copyright:           (c) 2016 Richard Appleby
 
 category:            Math
 
