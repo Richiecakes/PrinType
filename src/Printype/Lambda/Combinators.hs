@@ -7,52 +7,94 @@ Examples of both typbable and untypbable terms in the lambda calculus.
 Includes SK combinators, boolean logic combinators and church numerals.
 -}
 
-module Printype.Lambda.Combinators(sCombinator, kCombinator, identity,
-	numeral, true, false, andCombinator, orCombinator,
-	twicetwice, twicetwicetwice,
-	selfapply, abcd) where
+module Printype.Lambda.Combinators(
+	-- $comb
+
+	-- * SKI Calculus
+	s,
+	k,
+	i,
+	-- * Boolean Combinators
+	true,
+	false,
+	and,
+	or,
+	-- * Church numerals
+	numeral,
+	-- * Others
+	selfapply) where
 
 import Printype.Lambda.Syntax
 import Printype.Lambda.Parser
 
-identity :: Term
-identity = parseTerm "Lx.x"
+import Prelude hiding (and, or)
 
-sCombinator :: Term
-sCombinator = parseTerm "Lxyz.xz(yz)"
+-- $comb
+-- Standard combinators used in lambda calculus.
+-- This module is intended to be imported qualified, e.g.
+--
+-- > import qualified Printype.Lambda.Combinators as C
 
-kCombinator :: Term
-kCombinator = parseTerm "Lxy.x"
+-- |&#955;x.x
+i :: Term
+i = parseTerm "Lx.x"
 
+
+-- |&#955;xyz.xz(yz)
+s :: Term
+s = parseTerm "Lxyz.xz(yz)"
+
+-- |&#955;xy.x
+k :: Term
+k = parseTerm "Lxy.x"
+
+{-|
+Sometimes referred to as k, fst or const.
+
+&#955;xy.x
+-}
 true :: Term
-true = kCombinator
+true = k
 
+{-|
+Sometimes referred to as snd or seq.
+
+&#955;xy.y
+-}
 false :: Term
 false = parseTerm "Lxy.y"
 
-andCombinator :: Term
-andCombinator = lams "ab" $ appL [var 'a', var 'b', false]
+{-|
+Boolean AND function defined for boolean terms above.
 
-orCombinator :: Term
-orCombinator = lams "ab" $ appL [var 'a', true, var 'b']
+&#955;ab.ab&#955;xy.y
+-}
+and :: Term
+and = lams "ab" $ appL [var 'a', var 'b', false]
 
-abcd :: Term
-abcd = parseTerm "abcd"
+{-|
+Boolean OR function defined for boolean terms above.
 
--- Given a positive integer n, returns the nth Church numeral.
+&#955;ab.a(&#955;xy.x)b
+-}
+or :: Term
+or = lams "ab" $ appL [var 'a', true, var 'b']
+
+{-|
+Given a positive integer n, returns the nth Church numeral.
+
+&#955;fx.f(f(...f(x)...))
+-}
 numeral :: Int -> Term
 numeral n
   | n < 0     = error "numeral must take positive integer"
   | otherwise = lams "fx" (nfoldapp n (var 'f') (var 'x'))
 
-twice :: Term
-twice = numeral 2
 
-twicetwice :: Term
-twicetwice = app twice twice
+{-|
+An example of a self application which is not typbable.
 
-twicetwicetwice :: Term
-twicetwicetwice = app twice twicetwice
-
+&#955;x.xx
+-}
 selfapply :: Term
 selfapply = parseTerm "Lx.xx"

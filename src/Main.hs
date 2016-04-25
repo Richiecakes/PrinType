@@ -1,9 +1,9 @@
 module Main(main) where
 
-import Printype.Lambda.Combinators
 import Printype.Principal
-import qualified Printype.Latex as L
 import Printype.Lambda.Parser
+import qualified Printype.Lambda.Combinators as C
+import qualified Printype.Latex as L
 
 pretty_principal_type_deduction :: Term -> IO ()
 pretty_principal_type_deduction t = 
@@ -39,25 +39,21 @@ pretty_deduction d =
           mapp f g h [x] = [f x]
 
 --main :: IO ()
---main = mapM_ pretty_principal_type_deduction [
---                 identity,
---                 sCombinator,
---                 --appL' "thequickbrownfox",
---                 twicetwicetwice,
---                 numeral 0,
---                 appL' "xxx",
---                 true,
---                 andCombinator]
+--main = mapM_ pretty_principal_type_deduction ts
+--  where ts = [ C.i,
+--                 C.s,
+--                 C.numeral 0,
+--                 C.true,
+--                 C.and,
+--                 C.selfapply ]
 
 main :: IO ()
-main = pretty_principal_type_deduction sCombinator
+main = pretty_principal_type_deduction C.k
 
 --main :: IO ()
---main = L.render_term_deductions [ identity,
---					              sCombinator,
---					              numeral 2,
---					              selfapply,
---					              numeral 0,
---					              appL' "xxx",
---					              true,
---					              andCombinator ]
+--main = L.render_term_deductions [ C.i,
+--                                  C.s,
+--                                  C.numeral 0,
+--                                  C.true,
+--                                  C.and,
+--                                  C.selfapply ]
