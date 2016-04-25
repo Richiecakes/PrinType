@@ -25,12 +25,12 @@ import Text.LaTeX.Packages.AMSMath
 
 instance Texy Deduction where
   texy d =
-    let l = texy (d_context d)
+    let l = texy (context d)
          <> mapsto
-         <> texy (d_subject d)
+         <> texy (subject d)
          <> ":"
-         <> texy (d_type d)
-    in case (d_premise d) of
+         <> texy (ptype d)
+    in case (premise d) of
          Axiom -> namedAxiom "(var)" l
          Unary d1 -> namedUnary "(abs)" (texy d1) l
          Binary d1 d2 -> namedBinary "(app)" (texy d1) (texy d2) l

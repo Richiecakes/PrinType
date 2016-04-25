@@ -26,8 +26,8 @@ pretty_principal_type_deduction t =
 
 pretty_deduction :: Deduction -> [String]
 pretty_deduction d =
-	let conclusion = show (d_context d) ++ "  |-->  " ++ show (d_subject d) ++ ":" ++ show (d_type d) in
-	case d_premise d of
+	let conclusion = show (context d) ++ "  |-->  " ++ show (subject d) ++ ":" ++ show (ptype d) in
+	case premise d of
 		Axiom -> [conclusion]
 		Unary d1 -> [conclusion] ++ mapp f3 f1 f5 ("":(pretty_deduction d1))
 		Binary d1 d2 -> [conclusion] ++ mapp f4 f2 f4 ("":(pretty_deduction d1)) ++ mapp f4 f2 f5 ("":(pretty_deduction d2))
