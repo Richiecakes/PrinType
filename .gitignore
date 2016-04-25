@@ -18,3 +18,4 @@ cabal.sandbox.config
 *.pdf
 *.toc
 *.gz
+*.log
