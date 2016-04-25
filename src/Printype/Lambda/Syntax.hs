@@ -7,13 +7,22 @@ Datatype, construction functions and predicates for terms of the untyped lambda 
 -}
 
 module Printype.Lambda.Syntax(
-    Term(..),
-    var, lam, app,
-    lams, nfoldapp,
-    appL, appR, appL', appR',
-    free_in) where
+  -- * Syntax
+  Term(..),
+  -- * Constructor functions
+  var,
+  lam,
+  app,
+  lams,
+  appL,
+  appR,
+  appL',
+  appR',
+  nfoldapp,
+  -- * Predicates
+  free_in) where
 
--- Standard data type representing lambda terms using chars as variables.
+-- |Standard data type representing lambda terms using chars as variables.
 data Term = Var Char | Lam Char Term | App Term Term
 
 instance Show Term where
@@ -30,38 +39,41 @@ var = Var
 lam :: Char -> Term -> Term
 lam = Lam
 
--- Abstracts multiple variables at once.
+-- |Abstracts multiple variables at once.
 lams :: [Char] -> Term -> Term
 lams [] p = p
 lams (x:xs) p = lam x (lams xs p)
 
--- Application constructions.
 app :: Term -> Term -> Term
 app = App
 
--- Left assoc. term application.
+-- |Left associative repeat application.
 appL :: [Term] -> Term
 appL = foldl1 app
 
--- Right assoc. term application.
+-- |Right associative repeat application.
 appR :: [Term] -> Term
 appR = foldr1 app
 
--- Left assoc. term variable application.
+-- |Left associative repeat term variable application.
 appL' :: [Char] -> Term
 appL' = appL . (map Var)
 
--- Right assoc. term variable application.
+-- |Right associative repeat term variable application.
 appR' :: [Char] -> Term
 appR' = appR . (map Var)
 
--- Nfold application, used in church numerals for example.
+{-|
+N-fold application, used in church numerals for example. Applies f n times to x.
+
+> nfoldapp n f x = f(f(...f(x)...))
+-}
 nfoldapp :: Int -> Term -> Term -> Term
 nfoldapp n f x
   | n < 0     = error "nfoldapp must take an integer >= 0"
   | otherwise = appR $ (replicate n f) ++ [x]
 
--- Does x occur free in t?
+-- |Predicate for checking whether the given type variable occurs free in the given term.
 free_in :: Char -> Term -> Bool
 free_in x (Var y) = x == y
 free_in x (Lam y t) = x /= y && free_in x t
