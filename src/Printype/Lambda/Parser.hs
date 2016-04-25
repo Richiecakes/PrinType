@@ -6,11 +6,34 @@ A simple parsing library and parser for fully bracketed lambda calculus terms
 -}
 
 module Printype.Lambda.Parser(
+  -- * Parser
   parseTerm) where
+
+import Printype.Lambda.Syntax
 
 import Data.Char (isLower)
 
-import Printype.Lambda.Syntax
+-- INTERFACE --
+
+{-|
+Parses lambda calculus terms. For example:
+
+> parseTerm "Lx.xx" 
+
+returns 
+
+> Lam 'x' (App (Var 'x') (Var 'x'))
+
+The parser uses the following precedence rules.
+
+  * Application is left associative, i.e. xyz = ((xy)z)
+  * A lambda expression outside brackets binds everything to the right of the dot,
+  i.e. Lx.xLy.xy = Lx.x(Ly.xy)
+-}
+parseTerm :: String -> Term
+parseTerm = topLevel pTerm
+
+-- IMPLEMENTATION --
 
 type Parse a = String -> Maybe (a, String)
 
@@ -85,6 +108,3 @@ topLevel p inp =
       error ("parse failed; input unconsumed: " ++
              rest)
     Nothing -> error "parse unsuccessful"
-
-parseTerm :: String -> Term
-parseTerm = topLevel pTerm
