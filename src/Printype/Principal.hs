@@ -15,9 +15,7 @@ module Printype.Principal(
   Deduction(..),
   Premise(..),
   TypingFailure(..),
-  Context,
-  -- * Helper functions
-  to_list,
+  Ctx.Context,
   -- * Re-exports
   module Printype.Lambda,
   module Printype.Types) where
@@ -31,16 +29,15 @@ import Data.Either (isRight)
 
 import Printype.Lambda
 import Printype.Types
-import Printype.Principal.Contexts
-import Printype.Principal.Deductions
 
+import Printype.Principal.Deductions
+import qualified Printype.Types.Substitutions as Sub
+import qualified Printype.Principal.Contexts as Ctx
 
 -- |Performs principal type deduction on a term.
 principal_type_deduction :: Term                             -- ^ The term to type.
                          -> Either TypingFailure Deduction   -- ^ Either a proof demonstrating the terms principal type or an explanation as to why the term is not typbable.
 principal_type_deduction = fst . principal_type_deduction_log
-
-
 
 -- |As above, but also returns a textual log of the algorithms operation.
 principal_type_deduction_log :: Term -> (Either TypingFailure Deduction, [String])
@@ -136,8 +133,8 @@ principal_type_abs x t =
 	do
     (Ded d ctx _ a) <- principal_type t
     if x `free_in` t then
-      case type_in_context ctx x of
-        Just a1 -> return $ Ded (Unary (Ded d ctx t a)) (ctx \\\ x) (lam x t) (a1 :=> a)
+      case Ctx.lookup ctx x of
+        Just a1 -> return $ Ded (Unary (Ded d ctx t a)) (Ctx.remove ctx x) (lam x t) (a1 :=> a)
         Nothing -> throwError $ Err "x free in t but does not appear in type context"
 		else 
       do
@@ -150,9 +147,9 @@ principal_type_app t1 t2 =
   do 
     (Ded d1 ctx1 _ a1) <- principal_type t1
     (Ded d2 ctx2 _ a2) <- principal_type t2
-    let cvars = common_vars ctx1 ctx2
-        cs = mapMaybe (type_in_context ctx1) cvars
-        ds = mapMaybe (type_in_context ctx2) cvars
+    let cvars = Ctx.commonSubjects ctx1 ctx2
+        cs = mapMaybe (Ctx.lookup ctx1) cvars
+        ds = mapMaybe (Ctx.lookup ctx2) cvars
         in do 
              a3 <- if (is_arrow_type a1) then return (restype a1)
                    else get_fresh_typevar
@@ -163,15 +160,15 @@ principal_type_app t1 t2 =
                       Nothing -> principal_type_failure t1 t2
                       Just u -> unify_deductions u a3 (Ded d1 ctx1 t1 a1) (Ded d2 ctx2 t2 a2)
 
--- |Helper function to apply a unifier to a binary deduction step.
-unify_deductions :: Substitution -> Type -> Deduction -> Deduction -> DeductionAlg Deduction
+-- |Helper function to Sub.apply a unifier to a binary deduction step.
+unify_deductions :: Sub.Substitution -> Type -> Deduction -> Deduction -> DeductionAlg Deduction
 unify_deductions u a (Ded d1 ctx1 t1 a1) (Ded d2 ctx2 t2 a2) = 
-  let ctx1' = cmap (applysub u) ctx1
-      ctx2' = cmap (applysub u) ctx2
-      ctx = context_union ctx1' ctx2'
-      ded1' = applysub u (Ded d1 ctx1 t1 a1)
-      ded2' = applysub u (Ded d2 ctx2 t2 a2)
-      in return $ Ded (Binary ded1' ded2') ctx (app t1 t2) (applysub u a)
+  let ctx1' = Sub.apply u ctx1
+      ctx2' = Sub.apply u ctx2
+      ctx = Ctx.union ctx1' ctx2'
+      ded1' = Sub.apply u (Ded d1 ctx1 t1 a1)
+      ded2' = Sub.apply u (Ded d2 ctx2 t2 a2)
+      in return $ Ded (Binary ded1' ded2') ctx (app t1 t2) (Sub.apply u a)
 
 -- |Helper function for throwing Untypbable errors.
 principal_type_failure :: Term -> Term -> DeductionAlg a

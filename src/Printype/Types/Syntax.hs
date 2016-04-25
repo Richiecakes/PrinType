@@ -14,8 +14,6 @@ module Printype.Types.Syntax(
 	argtype, restype,
 	fresh_tv, fresh_tv') where
 
--- TYPES --
-
 -- Standard data type representing types using ints as type variables.
 data Type = TVar Int | Type :=> Type
 

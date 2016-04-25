@@ -2,6 +2,7 @@ module Main(main) where
 
 import Printype.Principal
 import Printype.Lambda.Parser
+
 import qualified Printype.Lambda.Combinators as C
 import qualified Printype.Latex as L
 

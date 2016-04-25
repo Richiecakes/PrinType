@@ -11,6 +11,7 @@ A LaTeX based pretty printer for type deductions using the HaTeX library and the
 module Printype.Latex(render_term_deduction, render_term_deductions) where
 
 import Printype.Principal
+import Printype.Principal.Contexts (toList)
 
 import Text.LaTeX.Packages.Prftree
 
@@ -44,7 +45,7 @@ instance Texy Term where
 
 instance Texy Context where
   texy c = 
-    let pairs = to_list c
+    let pairs = toList c
         pairsl = map (\ (c, t) -> fromString [c] <> ":" <> texy t) pairs
         pairslc = intersperse (fromString ",") pairsl
     in "{" <> (mconcat pairslc) <> "}"

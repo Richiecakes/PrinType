@@ -11,7 +11,7 @@ unifier factors through U.
 module Printype.Types.Unify(mgu, mgu_sequence) where
 
 import Printype.Types.Syntax
-import Printype.Types.Substitutions
+import qualified Printype.Types.Substitutions as Sub
 
 -- Two mismatching types found in two larger types.
 -- DTI: The left type is atomic.
@@ -30,24 +30,24 @@ find_mismatch (t1 :=> t2) (t1' :=> t2') =
     Just (m1, m2) -> Just (m1, m2)
 
 -- Returns the most general unifier of two types, should one exist.
-mgu :: Type -> Type -> Maybe Substitution
-mgu t1 t2 = mgu' empty_sub t1 t2
+mgu :: Type -> Type -> Maybe Sub.Substitution
+mgu t1 t2 = mgu' Sub.empty t1 t2
 
-mgu' :: Substitution -> Type -> Type -> Maybe Substitution
+mgu' :: Sub.Substitution -> Type -> Type -> Maybe Sub.Substitution
 mgu' u t1 t2 =
-  case find_mismatch (applysub u t1) (applysub u t2) of
+  case find_mismatch (Sub.apply u t1) (Sub.apply u t2) of
     Nothing -> Just u
     Just ((TVar c), c') ->
       if c `contains_tv` c' then Nothing
-      else mgu' ((singleton c c') `compose` u) t1 t2
+      else mgu' ((Sub.singleton c c') `Sub.compose` u) t1 t2
 
 -- Returns the most general unifier of two sequences of types, should one exist.
-mgu_sequence :: [Type] -> [Type] -> Maybe Substitution
+mgu_sequence :: [Type] -> [Type] -> Maybe Sub.Substitution
 mgu_sequence t1s t2s =
   let tv = fresh_tv' (t1s ++ t2s)
       t1 = arrowR (t1s ++ [(TVar tv)])
       t2 = arrowR (t2s ++ [(TVar tv)])
-      f = (\u -> u `unsubstitute` tv)
+      f = (\u -> u `Sub.remove` tv)
       in fmap f $ mgu t1 t2     
 
 -- L => A => M => B => D => A
