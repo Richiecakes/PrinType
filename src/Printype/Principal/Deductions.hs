@@ -78,4 +78,5 @@ unify (Ded d1 ctx1 t1 a1) (Ded d2 ctx2 t2 a2) u =
       ctx = Ctx.union ctx1' ctx2'
       ded1' = Sub.apply u (Ded d1 ctx1 t1 a1)
       ded2' = Sub.apply u (Ded d2 ctx2 t2 a2)
-  in Ded (Binary ded1' ded2') ctx (app t1 t2) (Sub.apply u (restype a1))
+      a1' = Sub.apply u a1
+  in Ded (Binary ded1' ded2') ctx (app t1 t2) (Sub.apply u (restype a1'))
