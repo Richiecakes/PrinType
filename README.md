@@ -16,21 +16,22 @@ algorithm which decides whether a term is typable, and finding a “most general
 it is. The most general types are called principal types and all the types of a particular
 term will be instances of the principal type.
 
-#### Dependencies
-Uses the HaTeX library. Produced LaTeX uses the prftree package.
-
-#### Module Summary
-##### Lambda
-Datatypes and helper functions for constructing and analysing terms of the lambda calculus.
-#####  Combinators
-Provides some commonly used terms.
-#####  Types
-Datatypes and helper functions for types and type substitutions.
-##### Unify
-Implements Robinson's type unification algorithm.
-#####  Principal
-Implements the simple principal typing algorithm
-#####  Latex
-Provides a HaTeX Powered LaTeX pretty printer for formal proofs of deductions, using the "prftree" package.
-#####  Prftree
-A HaTeX helper file for using the "prftree" package
+#### Building the source using cabal
+  * Clone the repo and cd into it
+  * Build into a sandbox
+   
+    ```bash
+    $ cabal sandbox init                   # Initialise the sandbox
+    $ cabal install --only-dependencies    # Install dependencies into the sandbox
+    $ cabal build  
+    ```
+    
+#### Building the docs using cabal and haddock
+  * Clone the repo and cd into it
+  * Install the dependencies into a sandbox with documentation and run haddock
+   
+    ```bash
+    $ cabal sandbox init                   # Initialise the sandbox
+    $ cabal install -j --only-dep --enable-documentation
+    $ cabal haddock  
+    ```
