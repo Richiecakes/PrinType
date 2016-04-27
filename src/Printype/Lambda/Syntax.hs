@@ -22,8 +22,11 @@ module Printype.Lambda.Syntax(
   -- * Predicates
   free_in) where
 
--- |Standard data type representing lambda terms using chars as variables.
-data Term = Var Char | Lam Char Term | App Term Term
+-- |Standard data type representing lambda terms using Chars as variables.
+data Term =
+    Var Char         -- ^ A variable x
+  | Lam Char Term    -- ^ An abstraction of the form &#955;x.t
+  | App Term Term    -- ^ An application of two terms (uv)
 
 instance Show Term where
   show (App t1 (App t2 t3)) = show t1 ++ "(" ++ show t2 ++ show t3 ++ ")"
